@@ -6,6 +6,8 @@ For each patient, stool samples were collected in a longitudinal manner spanning
 Samples underwent shotgun sequencing on the Illumina Novaseq platform (150bp, paired end) using half reactions of the standard
 Illumina DNA Prep kit. 
 
+Use of `conda`: `Conda` is a powerful environment and software manager. Many of the packages used in this pipeline are downloaded via `conda`. Refer to the [Miniconda webpage](https://docs.anaconda.com/free/miniconda/) for details on installing and configuring `conda`
+
 Navigate this repository:
 ```
 project
