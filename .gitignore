@@ -1,5 +1,7 @@
-data/processed/fastqc/*
+data/working/fastqc-initial/*
 !multiqc-report.html
+
+data/working/deduped/*
 
 data/raw/*
 !*.bash
