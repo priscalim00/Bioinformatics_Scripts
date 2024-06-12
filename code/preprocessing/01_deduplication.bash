@@ -28,7 +28,6 @@ do
         R2=${R1//R1_001.fastq.gz/R2_001.fastq.gz}
 #       echo $sample $R1 $R2
 
-        hts_SuperDeduper -1 "$R1" -2 "$R2" -f ../working/deduped/"$sample"_deduped
-        -L ../working/deduped/"$sample"_stats.log
+        hts_SuperDeduper -1 "$R1" -2 "$R2" -f ../working/deduped/"$sample"_deduped -L ../working/deduped/"$sample"_stats.log
 
 done

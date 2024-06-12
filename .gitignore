@@ -7,5 +7,9 @@ data/raw/*
 !*.bash
 !README.md
 
+data/references/*
+!*.bash
+!README.md
+
 slurm-*
 *.nfs

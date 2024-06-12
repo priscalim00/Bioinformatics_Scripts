@@ -13,13 +13,16 @@ Navigate this repository:
 project
 |- README           # the top level description of content (this doc)
 |
-|- data             # raw and primary data, are not changed once created
+|- data            
 | |- references/    # reference files such as reference genomes or taxonomic databases
 | |- raw/           # raw data files or instructions on how to obtain them
-| |- processed/     # cleaned data, used to generate figures
-| |- working/       # copies of raw data files being worked on or intermediate files required for downstream analysis            
+| |- processed/     # processed sequencing files used for MAG assembly & binning
+| |- working/       # preprocessing of raw sequencing files            
 |
-|- code/            # scripts with detailed comments for analyses and figure generation
+|- code/            
+| |- preprocessing/ # scripts used to preprocess reads prior to MAG assembly
+| |- assembly/      # scripts used for assembly, binning and taxonomic assignment
+| |- snpcalling/    # scripts used for calling and tracking SNPs between samples
 |
 |- results          # all output from workflows and analyses
 | |- tables/        # text version of tables to be rendered with kable in R
