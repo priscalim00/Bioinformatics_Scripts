@@ -7,3 +7,6 @@ bash data/raw/obtain_raw.bash
 
 #Run fastqc and multiqc on raw sequencing files
 sbatch code/preprocessing/00_fastqc.bash
+
+#Run hts_SuperDeduper on raw sequencing files
+sbatch code/prepocessing/01_deduplication.bash
