@@ -11,21 +11,24 @@
 # Deduplication of reads is performed to remove reads that are exact matches. These duplicated reads are likely due to PCR artifacts 
 # hence are removed to reduce the required  downstream computing power and avoid artificially inflated coverage in those regions
 
+# Input: Raw paired end fastq.gz files located in data/raw
+# Output: Deduplicated paired end fastq.gz and a _stats.log file for each sample containing information on no. of reads removed.
+# Output files are deposited in data/working/deduped/
+
 module load htstream
 
-import glob
-import os
+mkdir -p data/working/deduped
 
-mkdir data/working/deduplicated
+cd data/raw/
 
-for r1 in glob("data/raw/*_R1_*.fastq.gz"):
-    r2 = r1.replace("R1", "R2")
-    s = r1.split('/')[-1].replace("_L001_R1_001.fastq.gz", '')
-    cmd = "hts_SuperDeduper -L data/working/deduplicated/" + s + "_stats.log -1 " + r1 + " -2 " + r2 + " | "
+for file in *R1_001.fastq.gz
+do
+        sample=$(ls $file | sed 's/_.*//')
+        R1=$(ls $file)
+        R2=${R1//R1_001.fastq.gz/R2_001.fastq.gz}
+#       echo $sample $R1 $R2
 
+        hts_SuperDeduper -1 "$R1" -2 "$R2" -f ../working/deduped/"$sample"_deduped
+        -L ../working/deduped/"$sample"_stats.log
 
-
-
-
-
-
+done
