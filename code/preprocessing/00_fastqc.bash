@@ -15,8 +15,8 @@
 module load fastqc
 module load multiqc
 
-mkdir data/processed/fastqc
+mkdir data/working/fastqc-initial
 
-fastqc -o data/processed/fastqc/ data/raw/*.fastq.gz
-multiqc data/processed/fastqc -o data/processed/fastqc
+fastqc -o data/working/fastqc-initial data/raw/*.fastq.gz
+multiqc data/working/fastqc-initial -o data/working/fastqc-initial
 
