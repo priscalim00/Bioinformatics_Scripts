@@ -7,7 +7,7 @@ data/raw/*
 !*.bash
 !README.md
 
-data/references/*
+data/reference/*
 !*.bash
 !README.md
 
