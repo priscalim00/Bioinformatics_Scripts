@@ -12,4 +12,7 @@ sbatch data/reference/obtain_reference.bash
 sbatch code/preprocessing/00_fastqc.bash
 
 #Preprocessing step 01: Run hts_SuperDeduper on raw sequencing files
-sbatch code/prepocessing/01_deduplication.bash
+sbatch code/preprocessing/01_deduplication.bash
+
+#Preprocessing step 02: Trimming low quality reads and adapter sequences from deduplicated files
+sbatch code/preprocessing/02_trimming.bash
