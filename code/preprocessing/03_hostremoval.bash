@@ -14,8 +14,8 @@
 # Output: Alignment files and paired end reads with host removed deposited in data/working/host_removed
 
 
-module load bowtie2
-module load samtools
+module load bowtie2/2.4.5
+module load samtools/1.20 
 
 mkdir -p data/working/host_removed
 
