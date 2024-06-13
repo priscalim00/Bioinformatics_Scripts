@@ -20,6 +20,7 @@
 # Ensure that miniconda is downloaded and properly configurated, see link in README.md
 # Installation only needs to be done once, so if this is your first time running this script, 
 # uncomment the following line to create the metabat2 environment in which metabat2 is installed
+# Current version is  2.12.1
 
 # conda create --name metabat2 -c bioconda/label/cf201901 metabat2
 
