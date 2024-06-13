@@ -3,6 +3,8 @@ data/working/fastqc_initial/*
 
 data/working/deduped/*
 
+data/working/trimmed/*
+
 data/raw/*
 !*.bash
 !README.md
