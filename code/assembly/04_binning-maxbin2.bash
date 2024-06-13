@@ -44,8 +44,8 @@ do
 	mkdir ../binning/maxbin2/"$sample"
 	cd ../binning/maxbin2/"$sample"
 
-	run_MaxBin.pl --contigs ../trimmed_assemblies/"$file" \
-	--reads ../reads/"$sample"_processed_R1.fastq.gz --reads2 "$sample"_processed_R2.fastq.gz \
+	run_MaxBin.pl --contigs ../../../trimmed_assemblies/"$file" \
+	--reads ../../../reads/"$sample"_processed_R1.fastq.gz --reads2 ../../../reads/"$sample"_processed_R2.fastq.gz \
 	--out "$sample"
 done
 
