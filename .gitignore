@@ -1,3 +1,5 @@
+data/working/.nfs*
+
 data/working/fastqc_initial/*
 !multiqc_report.html
 
@@ -14,4 +16,3 @@ data/reference/*
 !README.md
 
 slurm-*
-*.nfs
