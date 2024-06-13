@@ -42,8 +42,8 @@ do
         R2=${R1//R1.fastq.gz/R2.fastq.gz}
 	sample=$(ls $file | sed 's/_.*//')
 
- 	bowtie2 -p 8 -x ../indices/"$sample" -1 "$R1" -2 "$R2" -S ../binning/"$sample"_.sam
+ 	bowtie2 -p 8 -x ../indices/"$sample" -1 "$R1" -2 "$R2" -S ../binning/"$sample".sam
 
-	samtools sort -n -m 5G -@ 2 ../binning/"$sample"_.sam -o ../binning/"$sample"_.bam
+	samtools sort -n -m 5G -@ 2 ../binning/"$sample".sam -o ../binning/"$sample".bam
 done
 
