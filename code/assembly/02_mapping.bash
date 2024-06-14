@@ -20,8 +20,8 @@ module purge #removes any loaded modules
 module load bowtie2/2.4.5
 module load samtools/1.20
 
-mkdir data/processed/indices
-mkdir data/processed/binning
+mkdir -p data/processed/indices
+mkdir -p data/processed/binning
 
 #First, create mapping index for each assembly
 cd data/processed/trimmed_assemblies/
