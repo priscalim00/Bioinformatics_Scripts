@@ -38,5 +38,7 @@ do
 	R2=${R1//R1.fast1.gz/R2.fastq.gz} 
 	sample=$(ls $file | sed 's/_.*//')
 
-	spades.py --meta -k auto -1 "$R1" -2 "$R2" -o ../assembly/"$sample"
+	spades.py --meta -k auto -1 "$R1" -2 "$R2" -o ../assembly/"$sample" &
 done
+wait
+
