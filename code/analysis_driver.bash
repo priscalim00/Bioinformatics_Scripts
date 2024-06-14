@@ -16,3 +16,7 @@ sbatch code/preprocessing/01_deduplication.bash
 
 #Preprocessing step 02: Trimming low quality reads and adapter sequences from deduplicated files
 sbatch code/preprocessing/02_trimming.bash
+
+#Preprocessing step 03: Removing host reads from trimmed files
+sbatch code/preprocessing/03_hostremoval.bash
+
