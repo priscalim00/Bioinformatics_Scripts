@@ -7,6 +7,8 @@ data/working/deduped/*
 
 data/working/trimmed/*
 
+data/working/host_removed/*
+
 data/raw/*
 !*.bash
 !README.md
