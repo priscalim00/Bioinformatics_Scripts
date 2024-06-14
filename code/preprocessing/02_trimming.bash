@@ -30,7 +30,22 @@ do
 	R2=${R1//R1.fastq.gz/R2.fastq.gz}
 
 	trim_galore -j 4 --paired "$R1" "$R2" -o ../trimmed
-	mv ../trimmed/$*R1_val_1.fq.gz ../trimmed/*trimmed_R1.fastq.gz
-	mv ../trimmed/$*R2_val_2.fq.gz ../trimmed/*trimmed_R2.fastq.gz
+done
+
+#renaming files to make them more informative
+
+for file in data/working/trimmed/*R1_val_1.fq.gz
+do
+        file=$(ls $file)
+        new_file=${file//deduped_R1_val_1.fq.gz./trimmed_R1.fastq.gz}
+        mv -n "$file" "$new_file"
+done
+
+
+for file in data/working/trimmed/*R2_val_2.fq.gz
+do
+        file=$(ls $file)
+        new_file=${file//deduped_R1_val_2.fq.gz./trimmed_R2.fastq.gz}
+        mv -n "$file" "$new_file"
 done
 
