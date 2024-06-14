@@ -16,12 +16,13 @@ project
 |- data            
 | |- references/    # reference files such as reference genomes or taxonomic databases
 | |- raw/           # raw data files or instructions on how to obtain them
-| |- processed/     # processed sequencing files used for MAG assembly & binning
-| |- working/       # preprocessing of raw sequencing files            
+| |- working/       # preprocessing of raw sequencing files
+| |- processed/     # processed sequencing files used for MAG assembly & binning         
 |
 |- code/            
 | |- preprocessing/ # scripts used to preprocess reads prior to MAG assembly
-| |- assembly/      # scripts used for assembly, binning and taxonomic assignment
+| |- assembly/      # scripts used for assembly, binning and dereplication
+| |- annotation/    # scripts used for taxonomic and gene annotation
 | |- snpcalling/    # scripts used for calling and tracking SNPs between samples
 |
 |- results          # all output from workflows and analyses
