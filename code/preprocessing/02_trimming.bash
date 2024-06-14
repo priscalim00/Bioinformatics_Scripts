@@ -29,8 +29,9 @@ do
 	R1=$(ls $file)
 	R2=${R1//R1.fastq.gz/R2.fastq.gz}
 
-	trim_galore -j 4 --paired "$R1" "$R2" -o ../trimmed
+	trim_galore -j 4 --paired "$R1" "$R2" -o ../trimmed &
 done
+wait
 
 #renaming files to make them more informative
 

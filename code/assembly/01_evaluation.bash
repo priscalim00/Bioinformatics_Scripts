@@ -28,8 +28,9 @@ for sample in *
 do
 	reformat.sh in="$sample"/scaffolds.fasta \
 	out=../trimmed_assemblies/"$sample"_scaffolds_trimmed.fasta \
-	minlength=1000
+	minlength=1000 &
 done
+wait
 
 #Next, we will generate summary statistics
 cd ../trimmed_assemblies
@@ -38,6 +39,6 @@ for file in *.fasta
 do
 	sample=$(ls $file | sed 's/_.*//')
 
-	stats.sh in="$file" > ../evaluation/"$sample".stats
+	stats.sh in="$file" > ../evaluation/"$sample".stats &
 done
-
+wait

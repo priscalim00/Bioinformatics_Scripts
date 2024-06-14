@@ -30,8 +30,9 @@ for file in *.fasta
 do
 	sample=$(ls $file | sed 's/_.*//')
 
-	bowtie2-build "$file" ../indices/"$sample"
+	bowtie2-build "$file" ../indices/"$sample" &
 done
+wait
 
 #Next, map processed reads to indices
 cd ../reads/
