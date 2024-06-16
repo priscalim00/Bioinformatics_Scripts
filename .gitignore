@@ -3,14 +3,16 @@ data/working/.nfs*
 data/working/fastqc_initial/*
 !multiqc_report.html
 
-data/working/fastqc_final/*
-!multiqc_report.html
-
 data/working/deduped/*
 
 data/working/trimmed/*
 
 data/working/host_removed/*
+
+data/working/fastqc_final/*
+!multiqc_report.html
+
+data/processed/*
 
 data/raw/*
 !*.bash
