@@ -38,19 +38,19 @@ do
 	cd ../binning/concoct/"$sample"
 
 	#cut contigs into smaller parts
-	cut_up_fasta.py ../../../trimmed_assemblies/"$file" -c 10000 -o 0 --merge_last -b "$sample"_contigs_10K.bed > "$sample"_contigs_10K.fa
+	cut_up_fasta.py ../../../trimmed_assemblies/"$file" -c 10000 -o 0 --merge_last -b "$sample"_contigs_10K.bed > "$sample"_contigs_10K.fa |
 
 	#generate coverage depth table
-	concoct_coverage_table.py "$sample"_contigs_10K.bed ../../"$sample".bam > "$sample"_coverage_table.tsv
+	concoct_coverage_table.py "$sample"_contigs_10K.bed ../../"$sample".bam > "$sample"_coverage_table.tsv |
 
 	#concoct binning
-	concoct --composition_file "$sample"_contigs_10K.fa --coverage_file "$sample"_coverage_table.tsv -b concoct_output/
+	concoct --composition_file "$sample"_contigs_10K.fa --coverage_file "$sample"_coverage_table.tsv -b concoct_output/ |
 
 	#merge subcontig clustering into original contig clustering
-	merge_cutup_clustering.py concoct_output/clustering_gt1000.csv > concoct_output/clustering_merged.csv
+	merge_cutup_clustering.py concoct_output/clustering_gt1000.csv > concoct_output/clustering_merged.csv |
 
 	#extract bins as fasta files
-	mkdir concoct_output/"$sample"_bins
-	extract_fasta_bins.py ../../../trimmed_assemblies/"$file concoct_output/clustering_merged.csv --output_path concoct_output/"$sample"_bins
+	mkdir concoct_output/"$sample"_bins 
+	extract_fasta_bins.py ../../../trimmed_assemblies/"$file concoct_output/clustering_merged.csv --output_path concoct_output/"$sample"_bins &
 done
-
+wait
