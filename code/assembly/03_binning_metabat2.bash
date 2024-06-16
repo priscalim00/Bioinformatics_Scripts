@@ -36,5 +36,6 @@ do
 	mkdir ../binning/metabat2/"$sample"
 	cd ../binning/metabat2/"$sample"
 
-	runMetaBat.sh ../../../trimmed_assemblies/"$sample"_scaffolds_trimmed.fasta ../../"$sample".bam
+	runMetaBat.sh ../../../trimmed_assemblies/"$sample"_scaffolds_trimmed.fasta ../../"$sample".bam &
 done
+wait

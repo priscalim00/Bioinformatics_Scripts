@@ -46,6 +46,6 @@ do
 
 	run_MaxBin.pl --contigs ../../../trimmed_assemblies/"$file" \
 	--reads ../../../reads/"$sample"_processed_R1.fastq.gz --reads2 ../../../reads/"$sample"_processed_R2.fastq.gz \
-	--out "$sample"
+	--out "$sample" &
 done
-
+wait
