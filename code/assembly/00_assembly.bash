@@ -25,8 +25,9 @@ for file in data/processed/reads/*_host_removed_*.fastq.gz
 do
         file=$(ls $file)
         new_file=${file///host_removed/processed}
-        mv -n "$file" "$new_file"
+        mv -n "$file" "$new_file" &
 done
+wait
 
 mkdir data/processed/assembly
 
