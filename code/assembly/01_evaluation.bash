@@ -18,8 +18,8 @@
 module purge #removes any loaded modules
 module load bbmap/39.06 
 
-mkdir data/processed/trimmed_assemblies
-mkdir data/processed/evaluation
+mkdir -p data/processed/trimmed_assemblies
+mkdir -p data/processed/evaluation
 
 #First, filter contigs to a minimum length of 1000bp as anything shorter than this is not useful
 cd data/processed/assembly/
