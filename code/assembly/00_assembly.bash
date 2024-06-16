@@ -18,7 +18,7 @@ module purge #removes any loaded modules
 module load spades/4.0.0
 
 mkdir data/processed/reads 
-cp data/working/host_removed/*.fastq.gz data/processed/reads/*.fastq.gz 
+cp data/working/host_removed/*.fastq.gz data/processed/reads 
 
 #renaming files
 for file in data/processed/reads/*_host_removed_*.fastq.gz
