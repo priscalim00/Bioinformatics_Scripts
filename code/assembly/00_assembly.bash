@@ -20,11 +20,11 @@ module load spades/4.0.0
 mkdir -p data/processed/reads 
 cp data/working/host_removed/*.fastq.gz data/processed/reads 
 
-#renaming files
+renaming files
 for file in data/processed/reads/*_host_removed_*.fastq.gz
 do
         file=$(ls $file)
-        new_file=${file///host_removed/processed}
+        new_file=${file//host_removed/processed}
         mv -n "$file" "$new_file" &
 done
 wait
@@ -36,7 +36,7 @@ cd data/processed/reads
 for file in *R1.fastq.gz 
 do 
 	R1=$(ls $file)
-	R2=${R1//R1.fast1.gz/R2.fastq.gz} 
+	R2=${R1//R1.fastq.gz/R2.fastq.gz} 
 	sample=$(ls $file | sed 's/_.*//')
 
 	spades.py --meta -k auto -1 "$R1" -2 "$R2" -o ../assembly/"$sample" &
