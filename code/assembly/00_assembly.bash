@@ -2,7 +2,7 @@
 
 #SBATCH -p general
 #SBATCH -N 1
-#SBATCH --mem 128g
+#SBATCH --mem 256g
 #SBATCH -n 32
 #SBATCH -t 2-
 #SBATCH --mail-type=all
