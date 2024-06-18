@@ -1,4 +1,4 @@
-# Antibiotics Tolerance project
+# Antibiotics Resistance project
 ## Led by Dr Tessa Andermann (UNC Chapel Hill), analysis conducted by Prisca Lim
 
 This project aims to characterize antibiotics tolerance development in patients undergoing bone marrow transplant (BMT). 
