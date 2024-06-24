@@ -19,6 +19,7 @@
 module purge #removes any loaded modules
 module load bowtie2/2.4.5
 module load samtools/1.20
+module load bbmap/39.06
 
 mkdir -p data/processed/binning
 
@@ -35,6 +36,11 @@ mkdir -p data/processed/binning/mapping/$1
 R1=data/processed/reads/$1_processed_R1.fastq.gz
 R2=data/processed/reads/$1_processed_R2.fastq.gz
 
-bowtie2 -p 8 -x data/processed/binning/indices/$1 -1 "$R1" -2 "$R2" \
--S data/processed/binning/mapping/$1/$1.sam 
-samtools sort -n -m 5G -@ 2 -o data/processed/binning/mapping/$1/$1.bam data/processed/binning/mapping/$1/$1.sam
+bowtie2 -p 8 -x data/processed/binning/indices/$1 -1 "$R1" -2 "$R2" -S data/processed/binning/mapping/$1/$1.sam
+#generateing abundance file - needed for maxbin2
+pileup.sh in=data/processed/binning/mapping/$1/$1.sam out=data/processed/binning/mapping/$1/$1_cov.txt 
+awk '{print $1"\t"$5}' data/processed/binning/mapping/$1/$1_cov.txt | grep-v '^#' > data/processed/binning/mapping/$1/$1_abundance.txt 
+#sorting sam file to bam file - needed for metabat2
+samtools sort -m 5G -@ 2 -o data/processed/binning/mapping/$1/$1.bam data/processed/binning/mapping/$1/$1.sam
+#indexing bam file - needed for concoct
+samtools index data/processed/binning/mapping/$1/$1.bam

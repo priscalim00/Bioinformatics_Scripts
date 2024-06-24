@@ -2,10 +2,10 @@
 
 #SBATCH -p general
 #SBATCH -N 1
-#SBATCH --mem 64g
-#SBATCH -n 16
+#SBATCH --mem 8g
+#SBATCH -n 4
 #SBATCH -t 1-
-#SBATCH --mail-type=end,fail
+#SBATCH --mail-type=fail
 #SBATCH --mail-user=prisca@live.unc.edu
 
 # Scripts 03-05 each use a different program to perform binning. This one utilizes MetaBAT2

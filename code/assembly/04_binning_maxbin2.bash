@@ -2,10 +2,10 @@
 
 #SBATCH -p general
 #SBATCH -N 1
-#SBATCH --mem 64g
-#SBATCH -n 16
+#SBATCH --mem 2g
+#SBATCH -n 4
 #SBATCH -t 1-
-#SBATCH --mail-type=all
+#SBATCH --mail-type=fail
 #SBATCH --mail-user=prisca@live.unc.edu
 
 # Scripts 03-05 each use a different program to perform binning. This one utilizes MaxBin2
@@ -38,7 +38,6 @@ mkdir -p data/processed/binning/maxbin2/$1
 # cd ../../..
 
 assembly=data/processed/evaluation/$1/$1_metaspades_trimmed.fasta
-R1=data/processed/reads/$1_processed_R1.fastq.gz
-R2=data/processed/reads/$1_processed_R2.fastq.gz
+abundance=data/processed/binning/mapping/$1/$1_abundance.txt
 
-run_MaxBin.pl --contigs "$assembly" --reads "$R1" --reads2 "$R2" --out data/processed/binning/maxbin2/$1
+run_MaxBin.pl -contig "$assembly" -abund "$abundance" -out data/processed/binning/maxbin2/$1/$1

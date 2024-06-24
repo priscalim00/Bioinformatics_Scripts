@@ -2,10 +2,10 @@
 
 #SBATCH -p general
 #SBATCH -N 1
-#SBATCH --mem 64g
-#SBATCH -n 16
+#SBATCH --mem 4g
+#SBATCH -n 2
 #SBATCH -t 1-
-#SBATCH --mail-type=all
+#SBATCH --mail-type=fail
 #SBATCH --mail-user=prisca@live.unc.edu
 
 # Scripts 03-05 each use a different program to perform binning. This one utilizes CONCOCT
@@ -47,7 +47,7 @@ concoct --composition_file "$outdir"/$1_contigs_10K.fa --coverage_file "$outdir"
 merge_cutup_clustering.py "$outdir"/clustering_gt1000.csv > "$outdir"/clustering_merged.csv
 
 #extract bins as fasta files
-mkdir concoct_output/"$sample"_bins 
-extract_fasta_bins.py ."$assembly" "$outdir"/clustering_merged.csv --output_path "$outdir"
+mkdir "$outdir"/bins
+extract_fasta_bins.py "$assembly" "$outdir"/clustering_merged.csv --output_path "$outdir"/bins
 
 
