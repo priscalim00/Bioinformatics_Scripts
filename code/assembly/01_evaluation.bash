@@ -9,36 +9,35 @@
 #SBATCH --mail-user=prisca@live.unc.edu
 
 # This script is used to 1) filter contigs to a min length of 1kb, and
-# 2) evaluate assembly statistics from the assemblies created by 00_assembly.bash
+# 2) evaluate assembly statistics from the assemblies created by 00_assembly.bash & 001_assembly_megahit.bash
 
 # Input: scaffolds.fasta files found under data/processed/assembly/"$sample"
-# Output: Filtered contigs will be deposited to data/processed/trimmed_assemblies/ 
-#	  Assembly statistics will be deposited to data/processed/evaluation/
+#	 final.contigs.fa files found under data/processed/assembly_megahit/"$sample"
+# Output: Assembly statistics will be deposited to data/processed/evaluation
 
 module purge #removes any loaded modules
 module load bbmap/39.06 
 
-mkdir -p data/processed/trimmed_assemblies
-mkdir -p data/processed/evaluation
-
-#First, filter contigs to a minimum length of 1000bp as anything shorter than this is not useful
-cd data/processed/assembly/
-
-for sample in *
+for sample in $(cat all_samples.txt);
 do
-	reformat.sh in="$sample"/scaffolds.fasta \
-	out=../trimmed_assemblies/"$sample"_scaffolds_trimmed.fasta \
-	minlength=1000 &
+
+	mkdir data/processed/evaluation/"$sample"
+
+	#copy metaspades assembly and rename it
+	cp data/processed/assembly/"$sample"/scaffolds.fasta data/processed/evaluation/"$sample"/"$sample"_metaspades.fasta
+
+	#copy megahit assembly and rename it
+	cp data/processed/assembly_megahit/"$sample"/final.contigs.fa data/processed/evaluation/"$sample"/"$sample"_megahit.fasta
+
+	#filter contigs to min length of 1000 bp
+	reformat.sh in=data/processed/evaluation/"$sample"/"$sample"_metaspades.fasta \
+	out=data/processed/evaluation/"$sample"/"$sample"_metaspades_trimmed.fasta minlength=1000
+
+	reformat.sh in=data/processed/evaluation/"$sample"/"$sample"_megahit.fasta \
+	out=data/processed/evaluation/"$sample"/"$sample"_megahit_trimmed.fasta minlength=1000
+
 done
-wait
 
-#Next, we will generate summary statistics
-cd ../trimmed_assemblies
+#run statswrapper on all .fasta files
+statswrapper.sh data/processed/evaluation/*/*.fasta > data/processed/evaluation/full_assembly.stats
 
-for file in *.fasta
-do
-	sample=$(ls $file | sed 's/_.*//')
-
-	stats.sh in="$file" > ../evaluation/"$sample".stats &
-done
-wait

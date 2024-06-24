@@ -2,48 +2,39 @@
 
 #SBATCH -p general
 #SBATCH -N 1
-#SBATCH --mem 128g
-#SBATCH -n 32
-#SBATCH -t 2-
-#SBATCH --mail-type=all
+#SBATCH --mem 64g
+#SBATCH -n 12
+#SBATCH -t 6:00:00
+#SBATCH --mail-type=fail
 #SBATCH --mail-user=prisca@live.unc.edu
 
 # This script is used to 1) create bowtie2 indices for each assembly .fasta file,
 #                        2) map reads from each sample to its respective assembly index
 
-# Input: Filtered scaffolds_trimmed.fasta files located in data/processed/trimmed_assemblies
+# Input: Filtered metaspades_trimmed.fasta files located in data/processed/evaluation
 #	 Processed reads are located under data/processed/reads
-# Output: Assembly indices will be deposited under data/processed/indices
-#	  Mapped reads (.bam files) will be depositied under data/processed/binning
+# Output: Assembly indices will be deposited under data/processed/binning/indices
+#	  Mapped reads (.bam files) will be depositied under data/processed/binning/mapping
 
 module purge #removes any loaded modules
 module load bowtie2/2.4.5
 module load samtools/1.20
 
-mkdir -p data/processed/indices
 mkdir -p data/processed/binning
 
 #First, create mapping index for each assembly
-cd data/processed/trimmed_assemblies/
+mkdir -p data/processed/binning/indices
 
-for file in *.fasta
-do
-	sample=$(ls $file | sed 's/_.*//')
-
-	bowtie2-build "$file" ../indices/"$sample" &
-done
-wait
+file=data/processed/evaluation/$1/$1_metaspades_trimmed.fasta
+bowtie2-build "$file" data/processed/binning/indices/$1
 
 #Next, map processed reads to indices
-cd ../reads/
+mkdir -p data/processed/binning/mapping
+mkdir -p data/processed/binning/mapping/$1
 
-for file in *R1.fastq.gz
-do
-	R1=$(ls $file)
-	R2=${R1//R1.fastq.gz/R2.fastq.gz}
-	sample=$(ls $file | sed 's/_.*//')
+R1=data/processed/reads/$1_processed_R1.fastq.gz
+R2=data/processed/reads/$1_processed_R2.fastq.gz
 
- 	bowtie2 -p 8 -x ../indices/"$sample" -1 "$R1" -2 "$R2" -S ../binning/"$sample".sam &&
-	samtools sort -n -m 5G -@ 2 ../binning/"$sample".sam -o ../binning/"$sample".bam &
-done
-wait
+bowtie2 -p 8 -x data/processed/binning/indices/$1 -1 "$R1" -2 "$R2" \
+-S data/processed/binning/mapping/$1/$1.sam 
+samtools sort -n -m 5G -@ 2 -o data/processed/binning/mapping/$1/$1.bam data/processed/binning/mapping/$1/$1.sam

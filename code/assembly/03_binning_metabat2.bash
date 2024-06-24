@@ -5,7 +5,7 @@
 #SBATCH --mem 64g
 #SBATCH -n 16
 #SBATCH -t 1-
-#SBATCH --mail-type=all
+#SBATCH --mail-type=end,fail
 #SBATCH --mail-user=prisca@live.unc.edu
 
 # Scripts 03-05 each use a different program to perform binning. This one utilizes MetaBAT2
@@ -23,19 +23,18 @@
 # Current version is  2.12.1
 
 # conda create --name metabat2 -c bioconda/label/cf201901 metabat2
-
+eval "$(conda shell.bash hook)"
 conda activate metabat2
 
 mkdir -p data/processed/binning/metabat2
+mkdir -p data/processed/binning/metabat2/$1
 
-cd data/processed/trimmed_assemblies
-for file in *_scaffolds_trimmed.fasta
-do
-	sample=$(ls $file | sed 's/_.*//')
+cd data/processed/binning/metabat2/$1
 
-	mkdir ../binning/metabat2/"$sample"
-	cd ../binning/metabat2/"$sample"
+assembly=../../../evaluation/$1/$1_metaspades_trimmed.fasta
+mapping=../../mapping/$1/$1.bam
 
-	runMetaBat.sh ../../../trimmed_assemblies/"$sample"_scaffolds_trimmed.fasta ../../"$sample".bam &
-done
-wait
+runMetaBat.sh "$assembly" "$mapping" 
+
+
+

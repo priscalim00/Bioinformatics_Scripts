@@ -2,7 +2,7 @@
 
 #SBATCH -p general
 #SBATCH -N 1
-#SBATCH --mem 256g
+#SBATCH --mem 64g
 #SBATCH -n 16
 #SBATCH -t 2-
 #SBATCH --mail-type=all
@@ -10,19 +10,11 @@
 
 # This script acts to assemble each sample into MAGs individually using megahit.
 
-conda activate megahit 
 
-mkdir -p data/processed/assembly_megahit
+R1=$1_processed_R1.fastq.gz
+R2=$1_processed_R2.fastq.gz
+sample=$1
 
-cd data/processed/reads
-
-for file in *R1.fastq.gz 
-do 
-	R1=$(ls $file)
-	R2=${R1//R1.fastq.gz/R2.fastq.gz} 
-	sample=$(ls $file | sed 's/_.*//')
-
-	megahit -1 "$R1" -2 "$R2" -o ../assembly_megahit/"$sample" &
-done
-wait
+mkdir -p  data/processed/assembly_megahit
+megahit -1 data/processed/reads/"$R1" -2 data/processed/reads/"$R2" -o data/processed/assembly_megahit/"$sample"
 

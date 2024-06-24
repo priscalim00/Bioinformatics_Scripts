@@ -8,6 +8,10 @@ bash data/raw/obtain_raw.bash
 #Obtain human reference genome
 sbatch data/reference/obtain_reference.bash
 
+#Generate sample list
+cd data/raw/
+ls *R1_001.fastq.gz | sed 's/_.*//' > ../../all_samples.txt
+
 #Preprocessing:
 ##Step 00: Run fastqc and multiqc on raw sequencing files
 sbatch code/preprocessing/00_fastqc.bash
@@ -26,5 +30,11 @@ sbatch code/preprocessing/04_finalqc.bash
 
 #Assembly:
 ##Step 00: Running metaspades
-sbatch code/assembly/00_assembly.bash
+for sample in $(cat all_samples.txt); do sbatch code/assembly/00_assembly.bash $sample; done
+
+##Step 01: Evaluating assembly stats
+sbatch code/assembly/01_evaluation.bash
+
+##Step 02: Creating indices and mapping reads
+for sample in $(cat all_samples.txt); do sbatch code/assembly/02_mapping.bash $sample; done
 

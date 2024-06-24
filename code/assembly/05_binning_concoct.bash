@@ -24,33 +24,30 @@
 # Current version is 1.1.0
 
 # conda create -n concoct python=3 concoct
-
+eval "$(conda shell.bash hook)"
 conda activate concoct
 
 mkdir -p data/processed/binning/concoct
+mkdir -p data/processed/binning/concoct/$1
 
-cd data/processed/trimmed_assemblies
-for file in *_scaffolds_trimmed.fasta
-do
-	sample=$(ls $file | sed 's/_.*//')
+assembly=data/processed/evaluation/$1/$1_metaspades_trimmed.fasta
+mapping=data/processed/binning/mapping/$1/$1.bam 
+outdir=data/processed/binning/concoct/$1
 
-	mkdir ../binning/concoct/"$sample"
-	cd ../binning/concoct/"$sample"
+#cut contigs into smaller parts
+cut_up_fasta.py "$assembly" -c 10000 -o 0 --merge_last -b "$outdir"/$1_contigs_10K.bed > "$outdir"/$1_contigs_10K.fa
 
-	#cut contigs into smaller parts
-	cut_up_fasta.py ../../../trimmed_assemblies/"$file" -c 10000 -o 0 --merge_last -b "$sample"_contigs_10K.bed > "$sample"_contigs_10K.fa |
+#generate coverage depth table
+concoct_coverage_table.py "$outdir"/$1_contigs_10K.bed "$mapping" > "$outdir"/$1_coverage_table.tsv
 
-	#generate coverage depth table
-	concoct_coverage_table.py "$sample"_contigs_10K.bed ../../"$sample".bam > "$sample"_coverage_table.tsv |
+#concoct binning
+concoct --composition_file "$outdir"/$1_contigs_10K.fa --coverage_file "$outdir"/$1_coverage_table.tsv -b "$outdir"/
 
-	#concoct binning
-	concoct --composition_file "$sample"_contigs_10K.fa --coverage_file "$sample"_coverage_table.tsv -b concoct_output/ |
+#merge subcontig clustering into original contig clustering
+merge_cutup_clustering.py "$outdir"/clustering_gt1000.csv > "$outdir"/clustering_merged.csv
 
-	#merge subcontig clustering into original contig clustering
-	merge_cutup_clustering.py concoct_output/clustering_gt1000.csv > concoct_output/clustering_merged.csv |
+#extract bins as fasta files
+mkdir concoct_output/"$sample"_bins 
+extract_fasta_bins.py ."$assembly" "$outdir"/clustering_merged.csv --output_path "$outdir"
 
-	#extract bins as fasta files
-	mkdir concoct_output/"$sample"_bins 
-	extract_fasta_bins.py ../../../trimmed_assemblies/"$file concoct_output/clustering_merged.csv --output_path concoct_output/"$sample"_bins &
-done
-wait
+

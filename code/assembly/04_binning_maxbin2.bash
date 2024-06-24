@@ -25,10 +25,11 @@
 # Current version is 2.2.7
 
 # conda create --name maxbin2 maxbin2
-
+eval "$(conda shell.bash hook)"
 conda activate maxbin2
 
 mkdir -p data/processed/binning/maxbin2
+mkdir -p data/processed/binning/maxbin2/$1
 
 # Note: currently unsure if maxbin2 takes .gz files, if script fails due to this, uncomment the following lines:
 
@@ -36,16 +37,8 @@ mkdir -p data/processed/binning/maxbin2
 # gzip -dk *.fastq.gz
 # cd ../../..
 
-cd data/processed/trimmed_assemblies
-for file in *_scaffolds_trimmed.fasta
-do
-	sample=$(ls $file | sed 's/_.*//')
+assembly=data/processed/evaluation/$1/$1_metaspades_trimmed.fasta
+R1=data/processed/reads/$1_processed_R1.fastq.gz
+R2=data/processed/reads/$1_processed_R2.fastq.gz
 
-	mkdir ../binning/maxbin2/"$sample"
-	cd ../binning/maxbin2/"$sample"
-
-	run_MaxBin.pl --contigs ../../../trimmed_assemblies/"$file" \
-	--reads ../../../reads/"$sample"_processed_R1.fastq.gz --reads2 ../../../reads/"$sample"_processed_R2.fastq.gz \
-	--out "$sample" &
-done
-wait
+run_MaxBin.pl --contigs "$assembly" --reads "$R1" --reads2 "$R2" --out data/processed/binning/maxbin2/$1
