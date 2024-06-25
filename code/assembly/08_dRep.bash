@@ -20,7 +20,11 @@
 # uncomment the following line to create the drep environment in which dRep is installed.
 # Current version is 2.0.0
 
+module load anaconda/2021.11
 # conda create -n drep drep
-eval "$(conda shell.bash hook)"
+
 conda_envs=/users/p/r/prisca/miniconda3/envs
 conda activate "$conda_envs"/drep
+
+pid=$1 #sample name contains PID and timepoint, e.g. BMT101D1: PID = BMT101 & timepoint = D1
+
