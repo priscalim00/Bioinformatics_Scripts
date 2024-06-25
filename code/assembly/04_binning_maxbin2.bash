@@ -25,8 +25,9 @@
 # Current version is 2.2.7
 
 # conda create --name maxbin2 maxbin2
-eval "$(conda shell.bash hook)"
-conda activate maxbin2
+module load anaconda/2021.11
+conda_envs=/users/p/r/prisca/miniconda3/envs
+conda activate "$conda_envs"/maxbin2
 
 mkdir -p data/processed/binning/maxbin2
 mkdir -p data/processed/binning/maxbin2/$1

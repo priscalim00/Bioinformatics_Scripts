@@ -22,7 +22,7 @@
 # Current version is 1.1.7
 
 # conda create -n das_tool -c bioconda das_tool
-eval "$(conda shell.bash hook)"
+module load anaconda/2021.11
 conda_envs=/users/p/r/prisca/miniconda3/envs
 conda activate "$conda_envs"/das_tool
 

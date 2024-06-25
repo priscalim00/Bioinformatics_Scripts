@@ -23,8 +23,9 @@
 # Current version is  2.12.1
 
 # conda create --name metabat2 -c bioconda/label/cf201901 metabat2
-eval "$(conda shell.bash hook)"
-conda activate metabat2
+module load anaconda/2021.11
+conda_envs=/users/p/r/prisca/miniconda3/envs
+conda activate "$conda_envs"/metabat2
 
 mkdir -p data/processed/binning/metabat2
 mkdir -p data/processed/binning/metabat2/$1

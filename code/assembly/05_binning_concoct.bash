@@ -24,8 +24,9 @@
 # Current version is 1.1.0
 
 # conda create -n concoct python=3 concoct
-eval "$(conda shell.bash hook)"
-conda activate concoct
+module load anaconda/2021.11
+conda_envs=/users/p/r/prisca/miniconda3/envs
+conda activate "$conda_envs"/concoct
 
 mkdir -p data/processed/binning/concoct
 mkdir -p data/processed/binning/concoct/$1
