@@ -41,7 +41,7 @@ cut_up_fasta.py "$assembly" -c 10000 -o 0 --merge_last -b "$outdir"/$1_contigs_1
 concoct_coverage_table.py "$outdir"/$1_contigs_10K.bed "$mapping" > "$outdir"/$1_coverage_table.tsv
 
 #concoct binning
-concoct --composition_file "$outdir"/$1_contigs_10K.fa --coverage_file "$outdir"/$1_coverage_table.tsv -b "$outdir"/
+concoct -t 2 --composition_file "$outdir"/$1_contigs_10K.fa --coverage_file "$outdir"/$1_coverage_table.tsv -b "$outdir"/
 
 #merge subcontig clustering into original contig clustering
 merge_cutup_clustering.py "$outdir"/clustering_gt1000.csv > "$outdir"/clustering_merged.csv

@@ -18,26 +18,23 @@
 module purge #removes any loaded modules
 module load bbmap/39.06 
 
-for sample in $(cat all_samples.txt);
-do
+sample=$1
 
-	mkdir data/processed/evaluation/"$sample"
+mkdir -p data/processed/evaluation/"$sample"
 
-	#copy metaspades assembly and rename it
-	cp data/processed/assembly/"$sample"/scaffolds.fasta data/processed/evaluation/"$sample"/"$sample"_metaspades.fasta
+#copy metaspades assembly and rename it
+cp data/processed/assembly/"$sample"/scaffolds.fasta data/processed/evaluation/"$sample"/"$sample"_metaspades.fasta
 
-	#copy megahit assembly and rename it
-	cp data/processed/assembly_megahit/"$sample"/final.contigs.fa data/processed/evaluation/"$sample"/"$sample"_megahit.fasta
+#copy megahit assembly and rename it
+cp data/processed/assembly_megahit/"$sample"/final.contigs.fa data/processed/evaluation/"$sample"/"$sample"_megahit.fasta
 
-	#filter contigs to min length of 1000 bp
-	reformat.sh in=data/processed/evaluation/"$sample"/"$sample"_metaspades.fasta \
-	out=data/processed/evaluation/"$sample"/"$sample"_metaspades_trimmed.fasta minlength=1000
+#filter contigs to min length of 1000 bp
+reformat.sh in=data/processed/evaluation/"$sample"/"$sample"_metaspades.fasta \
+out=data/processed/evaluation/"$sample"/"$sample"_metaspades_trimmed.fasta minlength=1000
 
-	reformat.sh in=data/processed/evaluation/"$sample"/"$sample"_megahit.fasta \
-	out=data/processed/evaluation/"$sample"/"$sample"_megahit_trimmed.fasta minlength=1000
+reformat.sh in=data/processed/evaluation/"$sample"/"$sample"_megahit.fasta \
+out=data/processed/evaluation/"$sample"/"$sample"_megahit_trimmed.fasta minlength=1000
 
-done
-
-#run statswrapper on all .fasta files
-statswrapper.sh data/processed/evaluation/*/*.fasta > data/processed/evaluation/full_assembly.stats
+#run statswrapper on .fasta files
+statswrapper.sh data/processed/evaluation/"$sample"/*.fasta >> data/processed/evaluation/full_assembly.stats
 

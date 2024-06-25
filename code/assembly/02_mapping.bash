@@ -39,7 +39,7 @@ R2=data/processed/reads/$1_processed_R2.fastq.gz
 bowtie2 -p 8 -x data/processed/binning/indices/$1 -1 "$R1" -2 "$R2" -S data/processed/binning/mapping/$1/$1.sam
 #generateing abundance file - needed for maxbin2
 pileup.sh in=data/processed/binning/mapping/$1/$1.sam out=data/processed/binning/mapping/$1/$1_cov.txt 
-awk '{print $1"\t"$5}' data/processed/binning/mapping/$1/$1_cov.txt | grep-v '^#' > data/processed/binning/mapping/$1/$1_abundance.txt 
+awk '{print $1"\t"$5}' data/processed/binning/mapping/$1/$1_cov.txt | grep -v '^#' > data/processed/binning/mapping/$1/$1_abundance.txt 
 #sorting sam file to bam file - needed for metabat2
 samtools sort -m 5G -@ 2 -o data/processed/binning/mapping/$1/$1.bam data/processed/binning/mapping/$1/$1.sam
 #indexing bam file - needed for concoct
