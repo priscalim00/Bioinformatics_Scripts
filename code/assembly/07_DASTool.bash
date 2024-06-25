@@ -2,7 +2,7 @@
 
 #SBATCH -p general
 #SBATCH -N 1
-#SBATCH --mem 16g
+#SBATCH --mem 2g
 #SBATCH -n 2
 #SBATCH -t 6:00:00
 #SBATCH --mail-type=fail
@@ -42,5 +42,5 @@ DAS_Tool -i "$concoct_dir"/"$sample"/"$sample"_concoct_associations.txt,\
 "$metabat2_dir"/"$sample"/"$sample"_metabat2_associations.txt \
 	-l concoct,maxbin2,metabat2 \
 	-c "$assembly_dir"/"$sample"/scaffolds.fasta \
-	-o "$dastool_dir"/"$sample" \
+	-o "$dastool_dir"/"$sample"/ \
 	-t 2 --write_bins --debug
