@@ -43,4 +43,6 @@ DAS_Tool -i "$concoct_dir"/"$sample"/"$sample"_concoct_associations.txt,\
 	-l concoct,maxbin2,metabat2 \
 	-c "$assembly_dir"/"$sample"/scaffolds.fasta \
 	-o "$dastool_dir"/"$sample"/ \
-	-t 2 --write_bins --debug
+	-t 2 --score_threshold=0 \
+	--write_bins --write_bin_evals \
+	--debug
