@@ -51,7 +51,7 @@ do
   for bin in "$dastooldir"/"$sample"/"$sample"_DASTool_bins/*.fa  
   do
   
-    mv "$bin" "${bindir}/${sample}_$(basename $bin)"
+    cp "$bin" "${bindir}/${sample}_$(basename $bin)"
     
   done
   
