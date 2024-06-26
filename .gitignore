@@ -15,6 +15,7 @@ data/working/fastqc_final/*
 data/processed/*
 !data/processed/evaluation/full_assembly.stats
 
+data/draft_genomes/*
 
 data/raw/*
 !*.bash

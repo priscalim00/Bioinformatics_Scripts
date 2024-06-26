@@ -2,17 +2,17 @@
 
 #SBATCH -p general
 #SBATCH -N 1
-#SBATCH --mem 2g
-#SBATCH -n 2
+#SBATCH --mem 64g
+#SBATCH -n 8
 #SBATCH -t 6:00:00
 #SBATCH --mail-type=fail
 #SBATCH --mail-user=prisca@live.unc.edu
 
 # This script utilizes dRep to dereplicate genomes obtained from the same PID
 
-# Input:
+# Input: All the consolidated bins from DAS_Tool for the PID of interest
 
-# Output:
+# Output: Dereplicated genomes for the PID of interest will be deposited in data/draft_genomes/"$pid"
 
 # dRep is not pre-loaded on Longleaf and needs to be installed via conda
 # Ensure that miniconda is downloaded and properly configurated, see link in README.md
@@ -26,5 +26,41 @@ module load anaconda/2021.11
 conda_envs=/users/p/r/prisca/miniconda3/envs
 conda activate "$conda_envs"/drep
 
+mkdir -p data/draft_genomes
+
 pid=$1 #sample name contains PID and timepoint, e.g. BMT101D1: PID = BMT101 & timepoint = D1
+
+echo Running dRep script for PID:"$pid"
+
+mkdir -p data/draft_genomes/"$pid"
+mkdir -p data/draft_genomes/"$pid"/all_bins
+mkdir -p data/draft_genomes/"$pid"/dereplicated
+
+dastooldir=data/processed/binning/das_tool
+bindir=data/draft_genomes/"$pid"/all_bins
+outdir=data/draft_genomes/"$pid"/dereplicated
+
+
+# First, we need to move all the bins from this PID into one directory. We will also rename the files to 
+# include sample names to prevent files overwriting each other
+for file in "$dastooldir"/"$pid"*
+do
+  
+  sample=$(basename $file)
+  
+  for bin in "$dastooldir"/"$sample"/"$sample"_DASTool_bins/*.fa  
+  do
+  
+    mv "$bin" "${bindir}/${sample}_$(basename $bin)"
+    
+  done
+  
+done
+wait
+ 
+# Now, we can easily run dRep
+dRep dereplicate "$outdir" -g "$bindir"/*.fa
+
+
+
 
