@@ -2,7 +2,7 @@
 
 #SBATCH -p general
 #SBATCH -N 1
-#SBATCH --mem 64g
+#SBATCH --mem 128g
 #SBATCH -n 8
 #SBATCH -t 6:00:00
 #SBATCH --mail-type=fail
@@ -25,6 +25,11 @@ module load anaconda/2021.11
 
 conda_envs=/users/p/r/prisca/miniconda3/envs
 conda activate "$conda_envs"/drep
+
+# CheckM is installed as part of the dRep package. However, you still need to manually install the CheckM reference database
+# Details on how to do so can be found in data/reference/obtain_reference.bash
+checkmdir=/data/reference/CheckM
+checkm data setRoot $checkmdir 
 
 mkdir -p data/draft_genomes
 
@@ -59,7 +64,7 @@ done
 wait
  
 # Now, we can easily run dRep
-dRep dereplicate "$outdir" -g "$bindir"/*.fa
+dRep dereplicate "$outdir" -g "$bindir"/*.fa --debug --length 10000 
 
 
 
