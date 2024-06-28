@@ -2,8 +2,8 @@
 
 #SBATCH -p general
 #SBATCH -N 1
-#SBATCH --mem 128g
-#SBATCH -n 8
+#SBATCH --mem 256g
+#SBATCH -n 6
 #SBATCH -t 6:00:00
 #SBATCH --mail-type=fail
 #SBATCH --mail-user=prisca@live.unc.edu
@@ -28,7 +28,7 @@ conda activate "$conda_envs"/drep
 
 # CheckM is installed as part of the dRep package. However, you still need to manually install the CheckM reference database
 # Details on how to do so can be found in data/reference/obtain_reference.bash
-checkmdir=/data/reference/CheckM
+checkmdir=/work/users/p/r/prisca/antibiotics_tolerance/data/reference/CheckM
 checkm data setRoot $checkmdir 
 
 mkdir -p data/draft_genomes
@@ -56,7 +56,7 @@ do
   for bin in "$dastooldir"/"$sample"/"$sample"_DASTool_bins/*.fa  
   do
   
-    cp "$bin" "${bindir}/${sample}_$(basename $bin)"
+    cp -u  "$bin" "${bindir}/${sample}_$(basename $bin)"
     
   done
   

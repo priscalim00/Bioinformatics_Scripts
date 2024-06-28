@@ -3,7 +3,7 @@
 #SBATCH -p general
 #SBATCH -N 1
 #SBATCH --mem 128g
-#SBATCH --cpus-per-task 2
+#SBATCH --cpus-per-task 4
 #SBATCH -t 1-
 #SBATCH --mail-type=fail
 #SBATCH --mail-user=prisca@live.unc.edu
@@ -40,8 +40,8 @@ module load anaconda/2021.11
 conda_envs=/users/p/r/prisca/miniconda3/envs
 conda activate "$conda_envs"/gtdbtk-2.4.0
 
-gtdbtkdir=/data/reference/GTDBtk/release220
-conda env config vars set GTDBTK_DATA_PATH=""$gtdbtkdir""
+gtdbtkdir=/work/users/p/r/prisca/antibiotics_tolerance/data/reference/GTDBtk
+conda env config vars set GTDBTK_DATA_PATH=""$gtdbtkdir"/release220"
 
 sample=$1
 
