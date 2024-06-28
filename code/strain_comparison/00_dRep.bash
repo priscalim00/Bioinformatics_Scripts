@@ -64,7 +64,7 @@ done
 wait
  
 # Now, we can easily run dRep
-dRep dereplicate "$outdir" -g "$bindir"/*.fa --debug --length 10000 
+dRep dereplicate "$outdir" -g "$bindir"/*.fa --debug --length 10000 --checkM_method taxonomy_wf 
 
 
 

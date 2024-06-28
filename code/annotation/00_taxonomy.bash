@@ -2,7 +2,7 @@
 
 #SBATCH -p general
 #SBATCH -N 1
-#SBATCH --mem 128g
+#SBATCH --mem 100g
 #SBATCH --cpus-per-task 4
 #SBATCH -t 1-
 #SBATCH --mail-type=fail
