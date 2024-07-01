@@ -24,11 +24,11 @@
 ## conda install -c bioconda numpy matplotlib pysam
 ## conda install -c bioconda hmmer prodigal pplacer
 ## pip3 install checkm-genome
-## export CHECKM_DATA_PATH=/data/reference/CheckM/
 
 module load anaconda/2021.11
 conda_envs=/users/p/r/prisca/miniconda3/envs
 conda activate "$conda_envs"/checkm
+export CHECKM_DATA_PATH=/work/users/p/r/prisca/antibiotics_tolerance/data/reference/CheckM/
 
 mkdir -p data/draft_genomes
 
@@ -63,7 +63,7 @@ wait
  
 # Now, we can run checkm
 checkm lineage_wf -t 16 -x fa "$bindir" "$outdir"
-checkm qa "$outdir"/lineage.ms "$outdir"/ >  "$pid"_checkm_results.csv
+checkm qa "$outdir"/lineage.ms "$outdir"/ >  "$outdir"/"$pid"_checkm_results.csv
 
 # I don't yet know how to format the checkm results for dRep using command line, so I just downloaded the output .txt file
 # and manually edited it using Excel to include genome filename, completeness and contamination. 

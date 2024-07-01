@@ -2,7 +2,7 @@
 
 #SBATCH -p general
 #SBATCH -N 1
-#SBATCH --mem 64g
+#SBATCH --mem 2g
 #SBATCH -n 8
 #SBATCH -t 1-
 #SBATCH --mail-type=fail
@@ -40,7 +40,7 @@ checkmdir=data/draft_genomes/"$pid"/checkm
 # I've taken the CheckM results file and edited it manually in Excel. 
 # This file is found in "$checkmdir"/"$pid"_checkm_drep.csv
 
-dRep dereplicate "$outdir" -g "$bindir"/*.fa --debug --processors 8 --genomeInfo "$checkmdir"/"$pid"_checkm_drep.csv   
+dRep dereplicate "$outdir" -g "$bindir"/*.fa --S_ani 0.99 --debug --processors 8 --genomeInfo "$checkmdir"/"$pid"_checkm_drep.csv   
 
 
 

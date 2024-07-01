@@ -23,11 +23,12 @@
 ## conda install -c bioconda numpy matplotlib pysam
 ## conda install -c bioconda hmmer prodigal pplacer
 ## pip3 install checkm-genome
-## export CHECKM_DATA_PATH=/data/reference/CheckM/
 
 module load anaconda/2021.11
 conda_envs=/users/p/r/prisca/miniconda3/envs
 conda activate "$conda_envs"/checkm
+export CHECKM_DATA_PATH=/work/users/p/r/prisca/antibiotics_tolerance/data/reference/CheckM/
+
 
 mkdir -p data/processed/binning/checkm
 
