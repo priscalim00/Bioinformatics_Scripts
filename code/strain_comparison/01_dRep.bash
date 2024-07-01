@@ -2,9 +2,9 @@
 
 #SBATCH -p general
 #SBATCH -N 1
-#SBATCH --mem 256g
-#SBATCH -n 6
-#SBATCH -t 6:00:00
+#SBATCH --mem 64g
+#SBATCH -n 8
+#SBATCH -t 1-
 #SBATCH --mail-type=fail
 #SBATCH --mail-user=prisca@live.unc.edu
 
@@ -26,45 +26,21 @@ module load anaconda/2021.11
 conda_envs=/users/p/r/prisca/miniconda3/envs
 conda activate "$conda_envs"/drep
 
-# CheckM is installed as part of the dRep package. However, you still need to manually install the CheckM reference database
-# Details on how to do so can be found in data/reference/obtain_reference.bash
-checkmdir=/work/users/p/r/prisca/antibiotics_tolerance/data/reference/CheckM
-checkm data setRoot $checkmdir 
-
-mkdir -p data/draft_genomes
-
 pid=$1 #sample name contains PID and timepoint, e.g. BMT101D1: PID = BMT101 & timepoint = D1
 
 echo Running dRep script for PID:"$pid"
 
-mkdir -p data/draft_genomes/"$pid"
-mkdir -p data/draft_genomes/"$pid"/all_bins
 mkdir -p data/draft_genomes/"$pid"/dereplicated
 
-dastooldir=data/processed/binning/das_tool
 bindir=data/draft_genomes/"$pid"/all_bins
 outdir=data/draft_genomes/"$pid"/dereplicated
+checkmdir=data/draft_genomes/"$pid"/checkm
 
+# Since we ran CheckM separately, we need to provide dRep with external genome information via a .csv file
+# I've taken the CheckM results file and edited it manually in Excel. 
+# This file is found in "$checkmdir"/"$pid"_checkm_drep.csv
 
-# First, we need to move all the bins from this PID into one directory. We will also rename the files to 
-# include sample names to prevent files overwriting each other
-for file in "$dastooldir"/"$pid"*
-do
-  
-  sample=$(basename $file)
-  
-  for bin in "$dastooldir"/"$sample"/"$sample"_DASTool_bins/*.fa  
-  do
-  
-    cp -u  "$bin" "${bindir}/${sample}_$(basename $bin)"
-    
-  done
-  
-done
-wait
- 
-# Now, we can easily run dRep
-dRep dereplicate "$outdir" -g "$bindir"/*.fa --debug --length 10000 --checkM_method taxonomy_wf 
+dRep dereplicate "$outdir" -g "$bindir"/*.fa --debug --processors 8 --genomeInfo "$checkmdir"/"$pid"_checkm_drep.csv   
 
 
 
