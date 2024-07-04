@@ -18,9 +18,10 @@
  
 
 # Input: Consolidated bins located in data/processed/binning/das_tool/"$sample"/"$sample"_DASTool_bins or
-#	 Dereplicated bins located in [will update when I finish the dRep scripts!] 
+#	 Dereplicated bins located in data/draft_genomes/"$sample"/dereplicated/dereplicated_genomes
+
 # Output: summary.tsv file containing classifications along with other output files will be deposited under
-#	  data/processed/annotation/"$sample" or [/path/to/dereplicated/genomes]
+#	  data/processed/annotation/"$sample" or data/draft_genomes/"$sample"/dereplicated/annotation
 
 # GTDB-tk is not pre-loaded on Longleaf and needs to be installed via conda
 # Ensure that miniconda is downloaded and properly configurated, see link in README.md
@@ -47,9 +48,16 @@ sample=$1
 
 echo running GTDB-tk classify workflow for sample "$sample"
 
-mkdir -p data/processed/annotation/"$sample"
+# For consolidated bins, use following lines:
+#outdir=data/processed/annotation/"$sample"
+#assemblydir=data/processed/binning/das_tool/"$sample"/"$sample"_DASTool_bins
 
-outdir=data/processed/annotation/"$sample"
-assemblydir=data/processed/binning/das_tool/"$sample"/"$sample"_DASTool_bins
+
+# For dereplicated bins, use following lines:
+outdir=data/draft_genomes/"$sample"/dereplicated/annotation
+assemblydir=data/draft_genomes/"$sample"/dereplicated/dereplicated_genomes
+
+mkdir -p $outdir
+
 
 gtdbtk classify_wf --genome_dir "$assemblydir"/ --out_dir "$outdir" --extension fa --cpus 4 --mash_db "$gtdbtkdir"/mash
