@@ -36,7 +36,7 @@ outdir=data/draft_genomes/"$pid"/dereplicated/mapping
 
 bowtie2-build "$genomes"/"$ecoli" "$outdir"/ecoli_index
 
-for file in data/processed/reads/BMT102*_R1*; 
+for file in "$reads"/"$pid"*_R1*; 
 do 
 
   sample=$(basename $file | sed 's/_.*//')

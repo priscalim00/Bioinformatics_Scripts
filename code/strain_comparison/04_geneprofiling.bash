@@ -2,8 +2,7 @@
 
 #SBATCH -p general
 #SBATCH -N 1
-#SBATCH --mem 2g
-#SBATCH -n 8
+#SBATCH --mem 1g
 #SBATCH -t 1-
 #SBATCH --mail-type=fail
 #SBATCH --mail-user=prisca@live.unc.edu
@@ -21,12 +20,15 @@
 module purge
 module load prodigal/2.6.3
 
-pid=BMT102
+# Edit PID
+pid=BMT127
+# Edit E.coli file name
+ecoli=BMT127D1_concoct.41
 genomedir=data/draft_genomes/"$pid"/dereplicated/dereplicated_genomes
 genesdir=data/draft_genomes/"$pid"/dereplicated/geneprofiling
 
 mkdir -p "$genesdir"
 
-prodigal -i "$genomedir"/BMT102D-9_concoct.76.fa -d "$genesdir"/BMT102D-9_concoct.76.genes.fna -a "$genesdir"/BMT102D-9_concoct.76.genes.faa
+prodigal -i "$genomedir"/"$ecoli".fa -d "$genesdir"/"$ecoli".genes.fna -a "$genesdir"/"$ecoli".genes.faa
 
 # Gene annotation to be added
