@@ -2,8 +2,8 @@
 
 #SBATCH -p general
 #SBATCH -N 1
-#SBATCH --mem 16g
-#SBATCH -n 8
+#SBATCH --mem 32g
+#SBATCH -n 4
 #SBATCH -t 1-
 #SBATCH --mail-type=fail
 #SBATCH --mail-user=prisca@live.unc.edu
@@ -33,16 +33,16 @@ conda activate "$conda_envs"/instrain
 module load samtools/1.20
 
 # Edit PID accordingly
-pid=BMT102
+pid=BMT127
 
 mapping=data/draft_genomes/"$pid"/dereplicated/mapping
 
 # Edit following variables to respective filepaths
-ecoli=BMT102D-9_concoct.76
+ecoli=BMT127D1_concoct.41
 genomefile=data/draft_genomes/"$pid"/dereplicated/dereplicated_genomes/"$ecoli".fa
 genefile=data/draft_genomes/"$pid"/dereplicated/geneprofiling/"$ecoli".genes.fna
 # Uncomment and input .stb filepath if required
-#stbfile=
+#stbfile=data/draft_genomes/"$pid"/dereplicated/"$ecoli".stb
 
 instrain=data/draft_genomes/"$pid"/dereplicated/instrain
 
@@ -58,4 +58,5 @@ do
 
 done
 
-#inStrain compare 
+inStrain compare -i "$instrain"/*_profile -o "$instrain"/"$pid"_compare -p 8 
+#if stb file is required, add it using the -s flag
