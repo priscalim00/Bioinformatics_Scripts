@@ -34,20 +34,7 @@ sbatch code/preprocessing/04_finalqc.bash
 for sample in $(cat all_samples.txt); do sbatch code/annotation/00_krakenbracken.bash
 
 ##Step 02: Combine Bracken outputs into one file
-module purge
-module load kraken/2.1.2 python/2.7.12
-python "$conda_envs"/kraken2bracken/bin/combine_bracken_outputs.py \
-	--files "$bracken_dir"/species/*_bracken_species.txt \
-	-o "$bracken_dir"/species/all_bracken_species.txt
-
-python "$conda_envs"/kraken2bracken/bin/combine_bracken_outputs.py \
-        --files "$bracken_dir"/genus/*_bracken_genus.txt \
-        -o "$bracken_dir"/genus/all_bracken_genus.txt
- 
-python "$conda_envs"/kraken2bracken/bin/combine_bracken_outputs.py \
-        --files "$bracken_dir"/order/*_bracken_order.txt \
-        -o "$bracken_dir"/order/all_bracken_order.txt
-module purge
+sbatch code/annotation/001_combinebracken.bash
 
 #Assembly:
 ##Step 00: Running metaspades
