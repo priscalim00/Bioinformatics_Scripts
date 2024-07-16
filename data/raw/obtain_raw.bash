@@ -1,7 +1,7 @@
-#/usr/bin/env bash
+#!/bin/bash/
 
 #This script is used to obtain raw sequencing files from this patient cohort
 
 cd data/raw/
 
-cp -uf /proj/andermannlab/working_files/BMT_Novaseq/*.fastq.gz .
+cp -uv /proj/andermannlab/working_files/UNC_BMT_Novaseq/*.fastq.gz .

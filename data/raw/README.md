@@ -2,7 +2,7 @@ The raw datafiles used in this analysis are stored in the Andermann Lab's Longle
 They can be obtained using the following code:
 
 ```bash
-cp /proj/andermannlab/working_files/BMT_Novaseq/*.fastq.gz .
+cp -n /proj/andermannlab/working_files/UNC_BMT_Novaseq/*.fastq.gz .
 
 ```
 Once files are processed, they are moved into a folder indicating the Month-Year that the analysis was performed.

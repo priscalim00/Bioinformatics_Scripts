@@ -13,10 +13,13 @@
 # Outputs are fastqc reports to data/working/fastqc_final
 
 module load fastqc
-module load multiqc
 
 mkdir data/working/fastqc_final
 
-fastqc -o data/working/fastqc_final data/working/host_removed/*.fastq.gz
-multiqc data/working/fastqc_final -o data/working/fastqc_final
+sample=$1
+
+fastqc -o data/working/fastqc_initial data/raw/"$sample"_R*.fastq.gz
+
+fastqc -o data/working/fastqc_final data/working/host_removed/"$sample"_R*.fastq.gz
+
 

@@ -29,7 +29,7 @@
 # uncomment the following line to create the gtdbtk environment in which GTDB-tk 2.4.0 is installed
 # conda create -n gtdbtk-2.4.0 -c conda-forge -c bioconda gtdbtk=2.4.0
 
-# Current version is  2.4.0
+# Current version is 2.4.0
 
 # Additionally, you will need to download the GTDB-tk reference data. The following lines will download the reference data into
 # data/reference. It can also be found in data/reference/obtain_reference.bash.

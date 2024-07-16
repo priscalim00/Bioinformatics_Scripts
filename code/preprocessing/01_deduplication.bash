@@ -5,7 +5,7 @@
 #SBATCH --mem 64g
 #SBATCH -n 16
 #SBATCH -t 1-
-#SBATCH --mail-type=all
+#SBATCH --mail-type=fail
 #SBATCH --mail-user=prisca@live.unc.edu
 
 # Deduplication of reads is performed to remove reads that are exact matches. These duplicated reads are likely due to PCR artifacts 
@@ -21,14 +21,10 @@ mkdir -p data/working/deduped
 
 cd data/raw/
 
-for file in *R1_001.fastq.gz
-do
-        sample=$(ls $file | sed 's/_.*//')
-        R1=$(ls $file)
-        R2=${R1//R1_001.fastq.gz/R2_001.fastq.gz}
-#       echo $sample $R1 $R2
+sample=$1
+R1="$sample"_*_R1_001.fastq.gz
+R2="$sample"_*_R2_001.fastq.gz
 
-        hts_SuperDeduper -1 "$R1" -2 "$R2" -f ../working/deduped/"$sample"_deduped -L ../working/deduped/"$sample"_stats.log &
+echo Deduplicating sample "$sample"
 
-done
-wait
+hts_SuperDeduper -1 $R1 -2 $R2 -f ../working/deduped/"$sample"_deduped -L ../working/deduped/"$sample"_stats.log 

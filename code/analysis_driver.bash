@@ -11,7 +11,13 @@ sbatch data/reference/obtain_reference.bash
 #Generate sample list
 mkdir -p data/summary
 cd data/raw/
-ls *R1_001.fastq.gz | sed 's/_.*//' > data/summary/all_samples.txt
+ls *R1_001.fastq.gz | sed 's/_.*//' > ../summary/all_samples.txt
+cd ../../
+
+#Separating new samples from processed samples
+mv data/summary/all_samples.txt > data/summary/processed_samples.txt
+grep -v -x -f data/summary/processed_samples.txt data/summary/all_samples.txt > data/summary/new_samples.txt
+
 
 #Preprocessing:
 ##Step 00: Run fastqc and multiqc on raw sequencing files
