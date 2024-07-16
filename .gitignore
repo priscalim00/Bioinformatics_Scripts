@@ -26,4 +26,6 @@ data/reference/*
 !*.bash
 !README.md
 
+data/summary/*
+
 slurm-*
