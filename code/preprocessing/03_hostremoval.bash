@@ -5,7 +5,7 @@
 #SBATCH --mem 64g
 #SBATCH -n 16
 #SBATCH -t 3-
-#SBATCH --mail-type=all
+#SBATCH --mail-type=fail
 #SBATCH --mail-user=prisca@live.unc.edu
 
 # This script utilizes bowtie2 and samtools to map reads to a host reference genome, retaining only unmapped reads

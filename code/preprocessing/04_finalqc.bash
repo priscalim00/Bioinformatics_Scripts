@@ -5,7 +5,7 @@
 #SBATCH --mem=16g
 #SBATCH -n 12
 #SBATCH -t 1-
-#SBATCH --mail-type=all
+#SBATCH --mail-type=fail
 #SBATCH --mail-user=prisca@live.unc.edu
 
 # Re-performing fastqc and multiqc on processed files
