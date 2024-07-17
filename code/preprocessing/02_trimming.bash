@@ -5,7 +5,7 @@
 #SBATCH --mem 64g
 #SBATCH -n 16
 #SBATCH -t 1-
-#SBATCH --mail-type=end
+#SBATCH --mail-type=fail
 #SBATCH --mail-user=prisca@live.unc.edu
 
 # This script utilizes trim_galore, a wrapper around Cutadapt and FastQC, to remove any adapters and low quality reads. 
@@ -34,6 +34,6 @@ trim_galore -j 4 --paired "$R1" "$R2" -o ../trimmed
 
 
 #renaming files to make them more informative
-cd data/working/trimmed/
+cd ../trimmed/
 mv "$sample"_deduped_R1_val_1.fq.gz "$sample"_trimmed_R1.fastq.gz
 mv "$sample"_deduped_R2_val_2.fq.gz "$sample"_trimmed_R2.fastq.gz

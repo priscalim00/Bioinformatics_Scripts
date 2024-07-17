@@ -20,20 +20,12 @@ grep -v -x -f data/summary/processed_samples.txt data/summary/all_samples.txt > 
 
 
 #Preprocessing:
-##Step 00: Run fastqc and multiqc on raw sequencing files
-sbatch code/preprocessing/00_fastqc.bash
+##Run preprocessing driver
+for sample in $(cat data/summary/new_samples.txt); do bash code/preprocessing/preprocessing_driver.bash "$sample"; done
 
-##Step 01: Run hts_SuperDeduper on raw sequencing files
-sbatch code/preprocessing/01_deduplication.bash
-
-##Step 02: Trimming low quality reads and adapter sequences from deduplicated files
-sbatch code/preprocessing/02_trimming.bash
-
-##Step 03: Removing host reads from trimmed files
-sbatch code/preprocessing/03_hostremoval.bash
-
-##Step 04: Generate fastqc and multiqc reports for processed reads
-sbatch code/preprocessing/04_finalqc.bash
+##Generate multiQC reports
+sbatch code/preprocessing/001_multiqc.bash
+sbatch code/preprocessing/041_multiqc.bash
 
 #Annotating processed reads with Kraken2 & Bracken
 ##Step 01: Run Kraken2, Bracken & KrakenTools

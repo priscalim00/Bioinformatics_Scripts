@@ -14,12 +14,10 @@
 
 module load fastqc
 
-mkdir data/working/fastqc_final
+mkdir -p data/working/fastqc_final
 
 sample=$1
 
-fastqc -o data/working/fastqc_initial data/raw/"$sample"_R*.fastq.gz
-
-fastqc -o data/working/fastqc_final data/working/host_removed/"$sample"_R*.fastq.gz
+fastqc -o data/working/fastqc_final data/working/host_removed/"$sample"_*_R*.fastq.gz
 
 

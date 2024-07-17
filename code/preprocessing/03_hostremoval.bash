@@ -26,7 +26,7 @@ R1="$sample"_trimmed_R1.fastq.gz
 R2="$sample"_trimmed_R2.fastq.gz
 
 #aligning reads to human database, -p defines number of cores to use
-bowtie2 -p 8 -x ../../reference/human_database -1 "$R1" -2 "$R2" -S ../host_removed/"$sample"_all.sam 
+bowtie2 -p 8 -x ../../reference/human/human_database -1 "$R1" -2 "$R2" -S ../host_removed/"$sample"_all.sam 
 
 #converting .sam file to .bam format
 samtools view -bS ../host_removed/"$sample"_all.sam > ../host_removed/"$sample"_all.bam 
