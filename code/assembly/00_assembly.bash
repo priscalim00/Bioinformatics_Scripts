@@ -3,7 +3,7 @@
 #SBATCH -p general
 #SBATCH -N 1
 #SBATCH --mem 250g
-#SBATCH -n 16
+#SBATCH -n 32
 #SBATCH -t 2-
 #SBATCH --mail-type=fail
 #SBATCH --mail-user=prisca@live.unc.edu
@@ -17,24 +17,18 @@
 module purge #removes any loaded modules
 module load spades/4.0.0
 
-mkdir -p data/processed/reads 
-cp data/working/host_removed/*.fastq.gz data/processed/reads 
+sample=$1
 
-#renaming files
-for file in data/processed/reads/*_host_removed_*.fastq.gz
-do
-        file=$(ls $file)
-        new_file=${file//host_removed/processed}
-        mv -n "$file" "$new_file" &
-done
-wait
+mkdir -p data/processed/reads 
+cp -uv data/working/host_removed/"$sample"_host_removed_R1.fastq.gz data/processed/reads/"$sample"_processed_R1.fastq.gz
+cp -uv data/working/host_removed/"$sample"_host_removed_R2.fastq.gz data/processed/reads/"$sample"_processed_R2.fastq.gz
+ 
 
 cd data/processed/reads
 
-R1=$1_processed_R1.fastq.gz
-R2=$1_processed_R2.fastq.gz
-sample=$1
+R1="$sample"_processed_R1.fastq.gz
+R2="$sample"_processed_R2.fastq.gz
 
 echo running spades for sample "$sample"
 
-spades.py --meta -k auto -1 "$R1" -2 "$R2" -o ../assembly/"$sample" 
+spades.py --meta  -t 32 -k auto -1 "$R1" -2 "$R2" -o ../assembly/"$sample" 

@@ -5,7 +5,7 @@
 #SBATCH --mem 32g
 #SBATCH -n 8
 #SBATCH -t 1-
-#SBATCH --mail-type=all
+#SBATCH --mail-type=fail
 #SBATCH --mail-user=prisca@live.unc.edu
 
 # This script is used to 1) filter contigs to a min length of 1kb, and
@@ -26,14 +26,14 @@ mkdir -p data/processed/evaluation/"$sample"
 cp data/processed/assembly/"$sample"/scaffolds.fasta data/processed/evaluation/"$sample"/"$sample"_metaspades.fasta
 
 #copy megahit assembly and rename it
-cp data/processed/assembly_megahit/"$sample"/final.contigs.fa data/processed/evaluation/"$sample"/"$sample"_megahit.fasta
+#cp data/processed/assembly_megahit/"$sample"/final.contigs.fa data/processed/evaluation/"$sample"/"$sample"_megahit.fasta
 
 #filter contigs to min length of 1000 bp
 reformat.sh in=data/processed/evaluation/"$sample"/"$sample"_metaspades.fasta \
 out=data/processed/evaluation/"$sample"/"$sample"_metaspades_trimmed.fasta minlength=1000
 
-reformat.sh in=data/processed/evaluation/"$sample"/"$sample"_megahit.fasta \
-out=data/processed/evaluation/"$sample"/"$sample"_megahit_trimmed.fasta minlength=1000
+#reformat.sh in=data/processed/evaluation/"$sample"/"$sample"_megahit.fasta \
+#out=data/processed/evaluation/"$sample"/"$sample"_megahit_trimmed.fasta minlength=1000
 
 #run statswrapper on .fasta files
 statswrapper.sh data/processed/evaluation/"$sample"/*.fasta >> data/processed/evaluation/full_assembly.stats
