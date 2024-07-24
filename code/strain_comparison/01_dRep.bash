@@ -30,6 +30,8 @@ pid=$1 #sample name contains PID and timepoint, e.g. BMT101D1: PID = BMT101 & ti
 
 echo Running dRep script for PID:"$pid"
 
+rm -rf data/draft_genomes/"$pid"/dereplicated/
+
 mkdir -p data/draft_genomes/"$pid"/dereplicated
 
 bindir=data/draft_genomes/"$pid"/all_bins

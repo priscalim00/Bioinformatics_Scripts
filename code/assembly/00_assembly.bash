@@ -4,7 +4,7 @@
 #SBATCH -N 1
 #SBATCH --mem 250g
 #SBATCH -n 32
-#SBATCH -t 2-
+#SBATCH -t 5-
 #SBATCH --mail-type=fail
 #SBATCH --mail-user=prisca@live.unc.edu
 

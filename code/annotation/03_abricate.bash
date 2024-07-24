@@ -33,6 +33,34 @@ abricate_dir=data/draft_genomes/"$pid"/abricate
 
 mkdir -p "$abricate_dir"
 
-abricate "$genome_dir"/*.fa > "$abricate_dir"/"$pid"_abricate.txt 
-abricate --summary "$abricate_dir"/"$pid"_abricate.txt > "$abricate_dir"/"$pid"_abricate_summary.txt
+#ncbi
+abricate "$genome_dir"/*.fa > "$abricate_dir"/"$pid"_abricate_ncbi.txt 
+
+#resfinder
+abricate --db resfinder "$genome_dir"/*.fa > "$abricate_dir"/"$pid"_abricate_resfinder.txt
+
+#plasmidfinder
+abricate --db plasmidfinder "$genome_dir"/*.fa > "$abricate_dir"/"$pid"_abricate_plasmidfinder.txt
+
+#megares
+abricate --db megares "$genome_dir"/*.fa > "$abricate_dir"/"$pid"_abricate_megares.txt
+
+#ecoh
+abricate --db ecoh "$genome_dir"/*.fa > "$abricate_dir"/"$pid"_abricate_ecoh.txt
+
+#vfdb
+abricate --db vfdb "$genome_dir"/*.fa > "$abricate_dir"/"$pid"_abricate_vfdb.txt
+
+#ecoli_vf
+abricate --db ecoli_vf "$genome_dir"/*.fa > "$abricate_dir"/"$pid"_abricate_ecoli_vf.txt
+
+#argannot
+abricate --db argannot "$genome_dir"/*.fa > "$abricate_dir"/"$pid"_abricate_argannot.txt
+
+#card
+abricate --db card "$genome_dir"/*.fa > "$abricate_dir"/"$pid"_abricate_card.txt
+
+#summarize all reports
+abricate --summary "$abricate_dir"/"$pid"_abricate_*.txt > "$abricate_dir"/"$pid"_abricate_summary.txt
+
 

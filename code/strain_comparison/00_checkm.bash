@@ -34,7 +34,7 @@ mkdir -p data/draft_genomes
 
 pid=$1 #sample name contains PID and timepoint, e.g. BMT101D1: PID = BMT101 & timepoint = D1
 
-echo Running dRep script for PID:"$pid"
+echo Running CheckM script for PID:"$pid"
 
 mkdir -p data/draft_genomes/"$pid"
 mkdir -p data/draft_genomes/"$pid"/all_bins
@@ -67,4 +67,5 @@ checkm qa "$outdir"/lineage.ms "$outdir"/ >  "$outdir"/"$pid"_checkm_results.csv
 
 # I don't yet know how to format the checkm results for dRep using command line, so I just downloaded the output .txt file
 # and manually edited it using Excel to include genome filename, completeness and contamination. 
+
 
