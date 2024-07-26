@@ -42,5 +42,5 @@ prokka_dir=data/draft_genomes/"$pid"/prokka
 for file in $genome_dir/*.fa
 do
 	filename=$(basename $file | sed 's/.fa//')
-	prokka --outdir "$prokka_dir"/"$filename" --prefix "$filename" "$file"
+	prokka --outdir "$prokka_dir"/"$filename" --cpus 0 --prefix "$filename" "$file"
 done
