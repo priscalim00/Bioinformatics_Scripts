@@ -3,7 +3,7 @@
 #SBATCH -p general
 #SBATCH -N 1
 #SBATCH --mem 64g
-#SBATCH --cpus-per-task 4
+#SBATCH --cpus-per-task 8
 #SBATCH -t 1-
 #SBATCH --mail-type=fail
 #SBATCH --mail-user=prisca@live.unc.edu
@@ -12,7 +12,7 @@
 # These gene annotations can then be fed into InStrain if desired
 
 # Input: Dereplicated bins located in data/draft_genomes/"$pid"/dereplicated/dereplicated_genomes
-# Output: 
+# Output: Bakta output files will be deposited under "$bakta_dir" 
 
 # Bakta is not pre-loaded on Longleaf and needs to be installed via conda
 # Ensure that miniconda is downloaded and properly configurated, see link in README.md
@@ -31,10 +31,8 @@ pid=$1
 genome_dir=data/draft_genomes/"$pid"/dereplicated/dereplicated_genomes
 bakta_dir=data/draft_genomes/"$pid"/bakta
 
-#stopped here, following lines still need to be edited
-
 for file in $genome_dir/*.fa
 do
 	filename=$(basename $file | sed 's/.fa//')
-	prokka --outdir "$prokka_dir"/"$filename" --prefix "$filename" "$file"
+	bakta --db "$conda_envs"/bakta/db --output "$bakta_dir"/"$filename" --prefix "$filename" --threads 8 "$file"
 done
