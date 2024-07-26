@@ -12,7 +12,7 @@
 # Abricate is only able to identify acquired resistance genes and not point mutations
 
 # Input: Dereplicated bins located in data/draft_genomes/"$pid"/dereplicated/dereplicated_genomes
-# Output:
+# Output: Abricate output files will be deposited under "$abricate_dir"
 
 # Abricate is not pre-loaded on Longleaf and needs to be installed via conda
 # Ensure that miniconda is downloaded and properly configurated, see link in README.md
@@ -59,8 +59,5 @@ abricate --db argannot "$genome_dir"/*.fa > "$abricate_dir"/"$pid"_abricate_arga
 
 #card
 abricate --db card "$genome_dir"/*.fa > "$abricate_dir"/"$pid"_abricate_card.txt
-
-#summarize all reports
-abricate --summary "$abricate_dir"/"$pid"_abricate_*.txt > "$abricate_dir"/"$pid"_abricate_summary.txt
 
 

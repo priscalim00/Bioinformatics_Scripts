@@ -46,16 +46,16 @@ conda env config vars set GTDBTK_DATA_PATH=""$gtdbtkdir"/release220"
 
 sample=$1
 
-echo running GTDB-tk classify workflow for sample "$sample"
+echo running GTDB-tk classify workflow for "$sample"
 
 # For consolidated bins, use following lines:
-outdir=data/processed/annotation/"$sample"
-assemblydir=data/processed/binning/das_tool/"$sample"/"$sample"_DASTool_bins
+#outdir=data/processed/annotation/"$sample"
+#assemblydir=data/processed/binning/das_tool/"$sample"/"$sample"_DASTool_bins
 
 
 # For dereplicated bins, use following lines:
-#outdir=data/draft_genomes/"$sample"/dereplicated/annotation
-#assemblydir=data/draft_genomes/"$sample"/dereplicated/dereplicated_genomes
+outdir=data/draft_genomes/"$sample"/dereplicated/annotation
+assemblydir=data/draft_genomes/"$sample"/dereplicated/dereplicated_genomes
 
 mkdir -p $outdir
 

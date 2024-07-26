@@ -12,7 +12,7 @@
 # These gene annotations can then be fed into InStrain if desired
 
 # Input: Dereplicated bins located in data/draft_genomes/"$pid"/dereplicated/dereplicated_genomes
-# Output: 
+# Output: Prokka returns a bunch of different output files under "$prokka_dir" 
 
 # Prokka is not pre-loaded on Longleaf and needs to be installed via conda
 # Ensure that miniconda is downloaded and properly configurated, see link in README.md
